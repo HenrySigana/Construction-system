@@ -1,0 +1,48 @@
+name: Deploy BuildTrack
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm install
+
+      - run: npm run build
+
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+```
+Commit ✅
+
+---
+
+## STEP 3 — Enable GitHub Pages
+
+1. Go to your repo → **Settings**
+2. Left sidebar → **Pages**
+3. Under **Branch** → select **`gh-pages`** → **`/ (root)`**
+4. Click **Save**
+
+---
+
+## STEP 4 — Watch it build
+
+1. Click **Actions** tab
+2. Wait ~2 minutes for the green ✅
+3. Visit your live site:
+```
+https://YOUR-USERNAME.github.io/buildtrack/
